@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: devops-python
-          image: vipin/devops-python:latest
+          image: vipinde/devops-python:latest
           ports:
             - containerPort: 8000
 

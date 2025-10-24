@@ -2,14 +2,14 @@ pipeline {
   agent any
 
   environment {
-    IMAGE_NAME = "vipin/devops-python"
+    IMAGE_NAME = "vipinde/devops-python"
     KUBE_DEPLOY_PATH = "k8s"
   }
 
   stages {
     stage('Clone Repo') {
       steps {
-        sh 'git clone https://github.com/vipin-ethans/devops-python.git'
+        sh 'git clone https://github.com/vipin-ethans/python_crud_jen_k8.git'
       }
     }
 
