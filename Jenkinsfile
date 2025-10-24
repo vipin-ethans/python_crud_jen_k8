@@ -6,6 +6,12 @@ pipeline {
     KUBE_DEPLOY_PATH = "k8s"
   }
 
+  stage('Clean Workspace') {
+  steps {
+    deleteDir() // Jenkins workspace clean karega
+  }
+}
+
   stages {
     stage('Clone Repo') {
       steps {
