@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devops-python
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: devops-python
+  template:
+    metadata:
+      labels:
+        app: devops-python
+    spec:
+      containers:
+        - name: devops-python
+          image: vipin/devops-python:latest
+          ports:
+            - containerPort: 8000
+

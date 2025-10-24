@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>FastAPI CRUD Frontend</title>
+  <style>
+    body { font-family: sans-serif;
+ margin: 2rem; }
+    h2 { margin-top: 2rem; }
+    form { margin-bottom: 1rem;
+ }
+    input, button { margin: 0.3rem; padding: 0.5rem; }
+    pre { background: #f4f4f4;
+ padding: 1rem; border: 1px solid #ccc; }
+  </style>
+</head>
+<body>
+  <h1>FastAPI CRUD Interface</h1>
+
+  <h2>Create User</h2>
+  <form id="createForm">
+    <input type="text" id="createName" placeholder="Name" required />
+    <input type="email" id="createEmail" placeholder="Email" required />
+    <button type="submit">Create</button>
+  </form>
+
+  <h2>Read User</h2>
+  <form id="readForm">
+    <input type="number" id="readId" placeholder="User ID" required />
+    <button type="submit">Read</button>
+  </form>
+
+  <h2>Update User</h2>
+  <form id="updateForm">
+    <input type="number" id="updateId" placeholder="User ID" required />
+    <input type="text" id="updateName" placeholder="New Name" required />
+    <input type="email" id="updateEmail" placeholder="New Email" required />
+    <button type="submit">Update</button>
+  </form>
+
+  <h2>Delete User</h2>
+  <form id="deleteForm">
+    <input type="number" id="deleteId" placeholder="User ID" required />
+    <button type="submit">Delete</button>
+  </form>
+
+  <h2>Response</h2>
+  <pre id="response"></pre>
+
+  <script>
+    const responseBox = document.getElementById('response');
+    async function callAPI(url, method, body = null) {
+      const res = await fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: body ? JSON.stringify(body) : null
+      });
+      const data = await res.json();
+      responseBox.textContent = JSON.stringify(data, null, 2);
+    }
+
+    // CREATE (No change needed)
+    document.getElementById('createForm').addEventListener('submit', e => {
+      e.preventDefault();
+      callAPI('/create/', 'POST', {
+        name: document.getElementById('createName').value,
+        email: document.getElementById('createEmail').value
+      });
+    });
+
+    // READ (FIXED: Uses ID in path)
+    document.getElementById('readForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const userId = document.getElementById('readId').value;
+      callAPI(`/read/${userId}`, 'GET');
+    });
+
+    // UPDATE (FIXED: Uses ID in path, sends name and email in body)
+    document.getElementById('updateForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const userId = document.getElementById('updateId').value;
+      callAPI(`/update/${userId}`, 'PUT', {
+        name: document.getElementById('updateName').value,
+        email: document.getElementById('updateEmail').value
+      });
+    });
+
+    // DELETE (FIXED: Uses ID in path)
+    document.getElementById('deleteForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const userId = document.getElementById('deleteId').value;
+      callAPI(`/delete/${userId}`, 'DELETE');
+    });
+  </script>
+</body>
+</html>
