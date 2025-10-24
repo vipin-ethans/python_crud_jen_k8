@@ -6,13 +6,14 @@ pipeline {
     KUBE_DEPLOY_PATH = "k8s"
   }
 
-  stage('Clean Workspace') {
-  steps {
-    deleteDir() // Jenkins workspace clean karega
+
+  stages {
+     stage('Clean Workspace') {
+      steps {
+    	deleteDir() // Jenkins workspace clean karega
   }
 }
 
-  stages {
     stage('Clone Repo') {
       steps {
         sh 'git clone https://github.com/vipin-ethans/python_crud_jen_k8.git'
